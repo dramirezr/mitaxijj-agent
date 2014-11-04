@@ -14,6 +14,29 @@
   
     <link rel="stylesheet" href="jquery.mobile-1.3.2.min.css" />
 
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script> 
+
+<script type="text/javascript" charset="utf-8"> 
+
+	
+	var model;
+	var platform;
+	var version;
+	var uuid;
+
+	function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false); 
+    }
+
+	function onDeviceReady() { 
+		model		=	device.model;
+		platform	=	device.platform;
+		version		=	device.version;
+		uuid		=	device.uuid;
+	}
+
+</script> 
+
 <style>
 .ui-bar-f {
     font-weight: normal;
@@ -72,9 +95,10 @@
       jsonpCallback: 'jsonpCallback',
       data : {cachehora : (new Date()).getTime()},
       }).done(function(response){
+	    params = 'uuid='+uuid+'&model='+model+'&platform='+platform+'&version='+version;
         if(response.state === 'ok'){
           $.mobile.loading("hide");
-          window.location.assign("http://app.mitaxijj.com.ec/agent/");
+          window.location.assign("http://app.mitaxijj.com.ec/agent/?"+params);
         }else{
           $.mobile.loading("hide");
           alert('No dispone de conexion a internet o el servidor no responde, por favor verifique su conexion y vuelva a intentarlo.');
